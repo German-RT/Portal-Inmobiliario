@@ -74,5 +74,32 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "Error occurred creating the DB.");
     }
 }
+// Crear usuario por defecto al iniciar
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
+        // Crear usuario de prueba
+        var testUser = await userManager.FindByEmailAsync("test@inmobiliaria.com");
+        if (testUser == null)
+        {
+            testUser = new IdentityUser
+            {
+                UserName = "test@inmobiliaria.com",
+                Email = "test@inmobiliaria.com",
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(testUser, "Test123!");
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Error creating test user.");
+    }
+}
 app.Run();
