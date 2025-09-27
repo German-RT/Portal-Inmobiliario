@@ -30,11 +30,34 @@
                     <h5 class="card-title">Interesado en este inmueble?</h5>
                     <p class="card-text">Agenda una visita para conocerlo en persona.</p>
                     
-                    <!-- Botón para agendar visita (Pregunta 3) -->
-                    <a href="#" class="btn btn-success w-100 mb-2">📅 Agendar Visita</a>
+                    <!-- Mostrar mensajes de éxito/error -->
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+
+                    <!-- Botón para agendar visita -->
+                    <a href="@Url.Action("AgendarVisita", new { id = Model.Id })" class="btn btn-success w-100 mb-2">📅 Agendar Visita</a>
                     
-                    <!-- Botón para reservar (Pregunta 3) -->
-                    <a href="#" class="btn btn-warning w-100">⭐ Reservar Ahora (48h)</a>
+                    <!-- Botón para reservar (solo si no hay reserva activa) -->
+                    @{
+                        var tieneReservaActiva = ViewBag.TieneReservaActiva ?? false;
+                    }
+                    @if (!tieneReservaActiva)
+                    {
+                        <form asp-action="Reservar" method="post" class="d-inline w-100">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <button type="submit" class="btn btn-warning w-100">⭐ Reservar Ahora (48h)</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary w-100" disabled>🚫 Ya Reservado</button>
+                    }
                 </div>
             </div>
         </div>
