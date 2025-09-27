@@ -6,7 +6,20 @@
 
 <div class="container mt-4">
     <h2>Catálogo de Inmuebles</h2>
-
+@if (ViewBag.FromCache != null && ViewBag.FromCache == true)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>⚡ CARGADO DESDE CACHE</strong> - Resultados en cache (rápido)
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>⏳ CARGADO DESDE BASE DE DATOS</strong> - Primera carga (lento)
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
     <!-- Formulario de filtros -->
     <div class="card mb-4">
         <div class="card-body">
@@ -15,9 +28,13 @@
                     <label class="form-label">Ciudad</label>
                     <select name="ciudad" class="form-select">
                         <option value="">Todas las ciudades</option>
-                        @foreach (var ciudad in ViewBag.Ciudades)
+                        @{
+                            // ✅ MANEJO SEGURO: Verificar que ViewBag.Ciudades existe
+                            var ciudades = ViewBag.Ciudades as List<string> ?? new List<string> { "Lima", "Arequipa" };
+                        }
+                        @foreach (var ciudadItem in ciudades)
                         {
-                            <option value="@ciudad" selected='@(ViewBag.CiudadFiltro == ciudad)'>@ciudad</option>
+                            <option value="@ciudadItem" selected='@(ViewBag.CiudadFiltro == ciudadItem)'>@ciudadItem</option>
                         }
                     </select>
                 </div>
