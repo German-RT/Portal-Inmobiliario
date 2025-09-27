@@ -72,7 +72,7 @@ namespace PortalInmobiliario.Data
                         Banos = 1,
                         MetrosCuadrados = 100,
                         Precio = 200000,
-                        Activo = false  // Este estará inactivo para pruebas
+                        Activo = true  // Este estará inactivo para pruebas
                     }
                 );
 

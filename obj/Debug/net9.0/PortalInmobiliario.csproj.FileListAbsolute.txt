@@ -136,7 +136,6 @@ C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\rjsmcshtml.dswa.cache.js
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\scopedcss\bundle\PortalInmobiliario.styles.css
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\scopedcss\projectbundle\PortalInmobiliario.bundle.scp.css
-C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\compressed\pl2l2dxh38-b9sayid5wm.gz
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\compressed\d6g24mflxj-61n19gt1b8.gz
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\compressed\yruku0xopr-xtxxf3hu2r.gz
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\compressed\o823k8u6a0-bqjiyaj88i.gz
@@ -210,3 +209,4 @@ C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\refint\PortalInmobiliari
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\PortalInmobiliario.pdb
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\PortalInmobiliario.genruntimeconfig.cache
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\ref\PortalInmobiliario.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\compressed\pl2l2dxh38-1f6xw3nzvc.gz
