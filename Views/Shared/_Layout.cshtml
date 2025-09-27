@@ -29,6 +29,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Catalog" asp-action="Index">Catálogo</a>
                         </li>
+                        @{
+                            // Verificar que Session esté disponible antes de usarlo
+                            var ultimoInmuebleId = Context.Session?.GetInt32("UltimoInmuebleId");
+                            var ultimoInmuebleTitulo = Context.Session?.GetString("UltimoInmuebleTitulo") ?? "";
+                        }
+
+                        @if (ultimoInmuebleId.HasValue && !string.IsNullOrEmpty(ultimoInmuebleTitulo))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-info" asp-controller="Catalog" asp-action="Details" 
+                                asp-route-id="@ultimoInmuebleId">
+                                    ↩ Volver a @ultimoInmuebleTitulo
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

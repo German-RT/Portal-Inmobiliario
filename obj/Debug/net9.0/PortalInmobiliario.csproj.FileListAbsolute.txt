@@ -210,3 +210,11 @@ C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\PortalInmobiliario.pdb
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\PortalInmobiliario.genruntimeconfig.cache
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\ref\PortalInmobiliario.dll
 C:\Users\Pc\Desktop\PortalInmobiliario\obj\Debug\net9.0\compressed\pl2l2dxh38-1f6xw3nzvc.gz
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\Pc\Desktop\PortalInmobiliario\bin\Debug\net9.0\StackExchange.Redis.dll

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using PortalInmobiliario.Data;
 using PortalInmobiliario.Models;
 
@@ -16,20 +17,28 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Configurar Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => 
 {
-    // Configuración simplificada para desarrollo
     options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 3;
-    options.Password.RequiredUniqueChars = 0;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// Agregar servicios necesarios
-builder.Services.AddRazorPages();  // ← ESTA LÍNEA FALTABA
+// ✅✅✅ CAMBIO DEFINITIVO: Usar MemoryCache en lugar de Redis
+builder.Services.AddDistributedMemoryCache();
+
+// Configurar sesión
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -46,6 +55,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -54,52 +65,21 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-// Crear base de datos y datos de prueba al iniciar
+// Crear base de datos
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        
-        // Aplicar migraciones pendientes
         context.Database.Migrate();
-        
-        // Insertar datos de prueba si no existen
         await SeedData.Initialize(services);
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Error occurred creating the DB.");
+        logger.LogError(ex, "Error creating DB");
     }
 }
-// Crear usuario por defecto al iniciar
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-        // Crear usuario de prueba
-        var testUser = await userManager.FindByEmailAsync("test@inmobiliaria.com");
-        if (testUser == null)
-        {
-            testUser = new IdentityUser
-            {
-                UserName = "test@inmobiliaria.com",
-                Email = "test@inmobiliaria.com",
-                EmailConfirmed = true
-            };
-            await userManager.CreateAsync(testUser, "Test123!");
-        }
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Error creating test user.");
-    }
-}
 app.Run();
