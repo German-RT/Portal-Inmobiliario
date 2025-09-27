@@ -1,0 +1,129 @@
+@model IEnumerable<PortalInmobiliario.Models.Inmueble>
+
+@{
+    ViewData["Title"] = "Catálogo de Inmuebles";
+}
+
+<div class="container mt-4">
+    <h2>Catálogo de Inmuebles</h2>
+
+    <!-- Formulario de filtros -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Ciudad</label>
+                    <select name="ciudad" class="form-select">
+                        <option value="">Todas las ciudades</option>
+                        @foreach (var ciudad in ViewBag.Ciudades)
+                        {
+                            <option value="@ciudad" selected='@(ViewBag.CiudadFiltro == ciudad)'>@ciudad</option>
+                        }
+                    </select>
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="form-label">Tipo</label>
+                    <select name="tipo" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="0" selected='@(ViewBag.TipoFiltro?.ToString() == "0")'>Departamento</option>
+                        <option value="1" selected='@(ViewBag.TipoFiltro?.ToString() == "1")'>Casa</option>
+                        <option value="2" selected='@(ViewBag.TipoFiltro?.ToString() == "2")'>Oficina</option>
+                        <option value="3" selected='@(ViewBag.TipoFiltro?.ToString() == "3")'>Local</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="form-label">Precio Mín</label>
+                    <input type="number" name="precioMin" class="form-control" value="@ViewBag.PrecioMinFiltro" min="0">
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="form-label">Precio Máx</label>
+                    <input type="number" name="precioMax" class="form-control" value="@ViewBag.PrecioMaxFiltro" min="0">
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="form-label">Dormitorios ≥</label>
+                    <input type="number" name="dormitorios" class="form-control" value="@ViewBag.DormitoriosFiltro" min="0">
+                </div>
+                
+                <div class="col-md-1 align-self-end">
+                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                </div>
+            </form>
+
+            <!-- Mensajes de validación -->
+            <div asp-validation-summary="ModelOnly" class="text-danger mt-2"></div>
+        </div>
+    </div>
+
+    <!-- Listado de inmuebles -->
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">No se encontraron inmuebles con los filtros seleccionados.</div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var inmueble in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-img-container" style="height: 200px; overflow: hidden; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                            @if (!string.IsNullOrEmpty(inmueble.Imagen) && inmueble.Imagen != "/images/placeholder.jpg")
+                            {
+                                <img src="@inmueble.Imagen" 
+                                    class="card-img-top" 
+                                    alt="@inmueble.Titulo" 
+                                    style="height: 100%; object-fit: cover;"
+                                    onerror="this.src='/images/placeholder.jpg'">
+                            }
+                            else
+                            {
+                                <div class="text-muted">
+                                    <i class="fas fa-home fa-3x"></i>
+                                    <p class="mt-2">Sin imagen</p>
+                                </div>
+                            }
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@inmueble.Titulo</h5>
+                            <p class="card-text flex-grow-1">
+                                <strong>@inmueble.Tipo</strong> en @inmueble.Ciudad<br>
+                                📍 @inmueble.Direccion<br>
+                                🛏️ @inmueble.Dormitorios dorm. · 🛁 @inmueble.Banos baños<br>
+                                📐 @inmueble.MetrosCuadrados m²<br>
+                                💰 $@inmueble.Precio.ToString("N0")
+                            </p>
+                            <a href="@Url.Action("Details", new { id = inmueble.Id })" class="btn btn-primary mt-auto">Ver Detalles</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Paginación -->
+        @if (ViewBag.TotalPages > 1)
+        {
+            <nav>
+                <ul class="pagination justify-content-center">
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" 
+                               href="@Url.Action("Index", new { 
+                                   ciudad = ViewBag.CiudadFiltro,
+                                   tipo = ViewBag.TipoFiltro,
+                                   precioMin = ViewBag.PrecioMinFiltro,
+                                   precioMax = ViewBag.PrecioMaxFiltro,
+                                   dormitorios = ViewBag.DormitoriosFiltro,
+                                   page = i 
+                               })">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+    }
+</div>

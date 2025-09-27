@@ -1,0 +1,46 @@
+@model PortalInmobiliario.Models.Inmueble
+
+@{
+    ViewData["Title"] = "Detalles del Inmueble";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>@Model.Titulo</h2>
+            <img src="@Model.Imagen" class="img-fluid rounded" alt="@Model.Titulo">
+            
+            <div class="mt-3">
+                <h4>Información del Inmueble</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Tipo:</strong> @Model.Tipo</li>
+                    <li class="list-group-item"><strong>Ciudad:</strong> @Model.Ciudad</li>
+                    <li class="list-group-item"><strong>Dirección:</strong> @Model.Direccion</li>
+                    <li class="list-group-item"><strong>Dormitorios:</strong> @Model.Dormitorios</li>
+                    <li class="list-group-item"><strong>Baños:</strong> @Model.Banos</li>
+                    <li class="list-group-item"><strong>Metros Cuadrados:</strong> @Model.MetrosCuadrados m²</li>
+                    <li class="list-group-item"><strong>Precio:</strong> $@Model.Precio.ToString("N0")</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Interesado en este inmueble?</h5>
+                    <p class="card-text">Agenda una visita para conocerlo en persona.</p>
+                    
+                    <!-- Botón para agendar visita (Pregunta 3) -->
+                    <a href="#" class="btn btn-success w-100 mb-2">📅 Agendar Visita</a>
+                    
+                    <!-- Botón para reservar (Pregunta 3) -->
+                    <a href="#" class="btn btn-warning w-100">⭐ Reservar Ahora (48h)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-3">
+        <a href="@Url.Action("Index")" class="btn btn-secondary">← Volver al Catálogo</a>
+    </div>
+</div>
